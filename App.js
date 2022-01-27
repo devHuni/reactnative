@@ -31,7 +31,7 @@ export default function App() {
         <Text style={styles.btnList}>반려견</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.btn4}>
-        <Text style={styles.btnList}>찜뽕</Text>
+        <Text style={styles.btnList}>찜 뽕</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.btn5}>
         <Text style={styles.btnList}>스터디</Text>
@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
     marginLeft: 15
   },
   btn3: {
-    backgroundColor: "#827717",
+    backgroundColor: "#a1887f",
     borderRadius: 15,
     paddingTop: 5,
     paddingLeft: 15,
@@ -136,10 +136,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "600",
     color: "#fff",
-    borderWidth: 2,
     padding: 10,
-    justifyContent: 'space-between',
-    borderRadius: 1000,
     marginLeft: 10,
     marginRight: 10
   },
@@ -157,5 +154,5 @@ const styles = StyleSheet.create({
     color: "gray",
     fontSize: 13,
     marginTop: 10
-  } 
+  }
 });
