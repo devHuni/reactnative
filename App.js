@@ -1,158 +1,186 @@
 import React from 'react';
-import { SafeAreaView, Text, View, Image, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView} from 'react-native';
+
+const main = 'https://firebasestorage.googleapis.com/v0/b/sparta-image.appspot.com/o/lecture%2Fmain.png?alt=media&token=8e5eb78d-19ee-4359-9209-347d125b322c'
+import data from './data.json';
 
 export default function App() {
+  let tip = data.tip;
+  let todayWeather = 10 + 17;
+  let todayCondition = "흐림"
+  //return 구문 밖에서는 슬래시 두개 방식으로 주석
   return (
-      <SafeAreaView>
-        <Text style={styles.title}>나만의 꿀팁</Text>
-        <View style={styles.container}>
-        <Image
-          style={{
-            resizeMode: "stretch",
-            height: 235,
-            width: 360,
-            borderRadius: 10
-          }}
-          source={{uri:"https://storage.googleapis.com/sparta-image.appspot.com/lecture/main.png"}}
-        />
-        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} contentContainerStyle={{
-          alignItems: 'center',
-          padding: 15,
-          paddingTop: 30 
-        }}>
-        <View style={styles.btn}>
-      <TouchableOpacity style={styles.btn1}>
-        <Text style={styles.btnList}>생활</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.btn2}>
-        <Text style={styles.btnList}>재테크</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.btn3}>
-        <Text style={styles.btnList}>반려견</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.btn4}>
-        <Text style={styles.btnList}>찜 뽕</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.btn5}>
-        <Text style={styles.btnList}>스터디</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.btn6}>
-        <Text style={styles.btnList}>수면</Text>
-      </TouchableOpacity>
-      </View>
+    /*
+      return 구문 안에서는 {슬래시 + * 방식으로 주석
+    */
+    <ScrollView style={styles.container}>
+      <Text style={styles.title}>나만의 꿀팁</Text>
+      <Text style={styles.weather}>오늘의 날씨: {todayWeather + '°C ' + todayCondition} </Text>
+      <Image style={styles.mainImage} source={{uri:main}}/>
+      <ScrollView style={styles.middleContainer} horizontal indicatorStyle={"white"}>
+        <TouchableOpacity style={styles.middleButton01}><Text style={styles.middleButtonText}>생활</Text></TouchableOpacity>
+        <TouchableOpacity style={styles.middleButton02}><Text style={styles.middleButtonText}>재테크</Text></TouchableOpacity>
+        <TouchableOpacity style={styles.middleButton03}><Text style={styles.middleButtonText}>반려견</Text></TouchableOpacity>
+        <TouchableOpacity style={styles.middleButton04}><Text style={styles.middleButtonText}>꿀팁 찜</Text></TouchableOpacity>
       </ScrollView>
-      <View style={styles.contents2}>
-      <Image
-          style={{
-            resizeMode: "stretch",
-            height: 120,
-            width: 135,
-            borderRadius: 10,
-            margin: 10,
-            marginLeft: 0
-          }}
-          source={{uri:"https://storage.googleapis.com/sparta-image.appspot.com/lecture/pizza.png"}}
-        />
-        <View style={styles.contents3}>
-        <Text style={styles.title2}>먹다 남은 피자를 촉촉하게!</Text>
-        <Text ellipsizeMode='tail' numberOfLines={3} style={{width:210}}>
-        꿀팁 설명: 먹다 남은 피자는 수분이 날라가기 때문에 처음처럼 맛있게 먹을 수 없는데요. 이럴 경우 그릇에 물을 받아 전자레인지 안에서 1분 30초에서 2분 정도 함께 돌려주면 촉촉하게 먹을 수 있습니다. 물이 전자레인지 안에서 수증기를 일으키고, 피자에 촉촉함을 더해줍니다.
-        </Text>
-        <Text style={styles.date}>2020.09.09</Text>
+      <View style={styles.cardContainer}>
+        {/* 하나의 카드 영역을 나타내는 View */}
+        { 
+          tip.map((content,i)=>{
+            return i % 2 == 0 ? (<View style={styles.cardEven} key={i}>
+              <Image style={styles.cardImage} source={{uri:content.image}}/>
+              <View style={styles.cardText}>
+                <Text style={styles.cardTitle} numberOfLines={1}>{content.title}</Text>
+                <Text style={styles.cardDesc} numberOfLines={3}>{content.desc}</Text>
+                <Text style={styles.cardDate}>{content.date}</Text>
+              </View>
+            </View>) : (<View style={styles.cardOdd} key={i}>
+                <Image style={styles.cardImage} source={{uri:content.image}}/>
+                <View style={styles.cardText}>
+                  <Text style={styles.cardTitle} numberOfLines={1}>{content.title}</Text>
+                  <Text style={styles.cardDesc} numberOfLines={3}>{content.desc}</Text>
+                  <Text style={styles.cardDate}>{content.date}</Text>
+                </View>
+              </View>)
+            
+          })
+         }
+        
       </View>
-      </View>
-      </View>
-      </SafeAreaView>
+   
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: "center",
-    textAlign: "center"
+    //앱의 배경 색
+    backgroundColor: '#fff',
   },
   title: {
-    fontSize: 25,
-    fontWeight: "900",
-    padding: 20
-  },
-  btn: {
-    display: "flex",
-    flexDirection: "row"
-  },
-  btn1: {
-    backgroundColor: "#fdd835",
-    borderRadius: 15,
-    paddingTop: 5,
-    paddingLeft: 15,
-    paddingRight: 15,
-    paddingBottom: 5
-  },
-  btn2: {
-    backgroundColor: "#ff6e40",
-    borderRadius: 15,
-    paddingTop: 5,
-    paddingLeft: 15,
-    paddingRight: 15,
-    paddingBottom: 5,
-    marginLeft: 15
-  },
-  btn3: {
-    backgroundColor: "#a1887f",
-    borderRadius: 15,
-    paddingTop: 5,
-    paddingLeft: 15,
-    paddingRight: 15,
-    paddingBottom: 5,
-    marginLeft: 15
-  },
-  btn4: {
-    backgroundColor: "#b388ff",
-    borderRadius: 15,
-    paddingTop: 5,
-    paddingLeft: 15,
-    paddingRight: 15,
-    paddingBottom: 5,
-    marginLeft: 15
-  },
-  btn5: {
-    backgroundColor: "#536dfe",
-    borderRadius: 15,
-    paddingTop: 5,
-    paddingLeft: 15,
-    paddingRight: 15,
-    paddingBottom: 5,
-    marginLeft: 15
-  },
-  btn6: {
-    backgroundColor: "#69f0ae",
-    borderRadius: 15,
-    paddingTop: 5,
-    paddingLeft: 15,
-    paddingRight: 15,
-    marginLeft: 15
-  },
-  btnList: {
+    //폰트 사이즈
     fontSize: 20,
-    fontWeight: "600",
-    color: "#fff",
-    padding: 10,
-    marginLeft: 10,
-    marginRight: 10
+    //폰트 두께
+    fontWeight: '700',
+    //위 공간으로 부터 이격
+    marginTop:50,
+    //왼쪽 공간으로 부터 이격
+    marginLeft:20
   },
-  contents2: {
-    display: "flex",
-    flexDirection: "row"
+  weather:{
+    alignSelf:"flex-end",
+    paddingRight:20
   },
-  title2: {
-    marginTop: 11,
-    fontSize: 20,
-    fontWeight: "900",
-    marginBottom: 15,
+  mainImage: {
+    //컨텐츠의 넓이 값
+    width:'90%',
+    //컨텐츠의 높이 값
+    height:200,
+    //컨텐츠의 모서리 구부리기
+    borderRadius:10,
+    marginTop:20,
+    //컨텐츠 자체가 앱에서 어떤 곳에 위치시킬지 결정(정렬기능)
+    //각 속성의 값들은 공식문서에 고대로~ 나와 있음
+    alignSelf:"center"
   },
-  date: {
-    color: "gray",
-    fontSize: 13,
-    marginTop: 10
-  }
+  middleContainer:{
+    marginTop:20,
+    marginLeft:10,
+    height:60
+  },
+  middleButton01: {
+    width:100,
+    height:50,
+    padding:15,
+    backgroundColor:"#fdc453",
+    borderColor:"deeppink",
+    borderRadius:15,
+    margin:7
+  },
+  middleButton02: {
+    width:100,
+    height:50,
+    padding:15,
+    backgroundColor:"#fe8d6f",
+    borderRadius:15,
+    margin:7
+  },
+  middleButton03: {
+    width:100,
+    height:50,
+    padding:15,
+    backgroundColor:"#9adbc5",
+    borderRadius:15,
+    margin:7
+  },
+  middleButtonText: {
+    color:"#fff",
+    fontWeight:"700",
+    //텍스트의 현재 위치에서의 정렬 
+    textAlign:"center"
+  },
+  middleButton04: {
+    width:100,
+    height:50,
+    padding:15,
+    backgroundColor:"#f886a8",
+    borderRadius:15,
+    margin:7
+  },
+  cardContainer: {
+    marginTop:10,
+    marginLeft:10
+  },
+  card:{
+    flex:1,
+    //컨텐츠들을 가로로 나열
+    //세로로 나열은 column <- 디폴트 값임 
+    flexDirection:"row",
+    margin:10,
+    borderBottomWidth:0.5,
+    borderBottomColor:"#eee",
+    paddingBottom:10
+
+  },
+  cardImage: {
+    flex:1,
+    width:100,
+    height:100,
+    borderRadius:10,
+  },
+  cardText: {
+    flex:2,
+    flexDirection:"column",
+    marginLeft:10,
+  },
+  cardTitle: {
+    fontSize:20,
+    fontWeight:"700"
+  },
+  cardDesc: {
+    fontSize:15
+  },
+  cardDate: {
+    fontSize:10,
+    color:"#A6A6A6",
+  },
+  cardEven:{
+    flex:1,
+    flexDirection:"row",
+    margin:10,
+    backgroundColor:"#FFFED7",
+    borderRadius:20,
+    borderBottomWidth:0.5,
+    borderBottomColor:"#eee",
+    paddingBottom:10
+  },
+  cardOdd:{
+    flex:1,
+    flexDirection:"row",
+    margin:10,
+    borderBottomWidth:0.5,
+    borderBottomColor:"#eee",
+    paddingBottom:10
+  },
+
 });
